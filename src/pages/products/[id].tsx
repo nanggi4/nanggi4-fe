@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 import Image from 'next/image';
 import type { NextPage } from 'next';
 import React from 'react';
@@ -10,14 +8,13 @@ import { GetServerSideProps } from 'next'
 
 import { convertComma } from '../../utilities';
 
-const ProductDetailPage: NextPage<Product> = (product) => {
-  console.log('123', product);
+const ProductDetailPage: NextPage<Product> = ({ name, price, thumbnail }) => {
   return (
     <>
-      <Image src={'/defaultThumbnail.jpg'} alt="test" width="100%" height={420} />
+      <Image src={`${thumbnail}`} alt={name} width={420} height={420} />
       <ProductInfoWrapper>
-        <Name>{product.name}</Name>
-        <Price>{convertComma(product.price)}원</Price>
+        <Name>{name}</Name>
+        <Price>{convertComma(price)}원</Price>
       </ProductInfoWrapper>
     </>
   )
@@ -27,13 +24,19 @@ export default ProductDetailPage;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const id = context.query.id;
-  const data = await axios.get(`https://api.sixshop.com/products/${id}`);
-  const product = data.data.data.product;
+  const res = await axios.get(`https://api.sixshop.com/products/${id}`);
+  const product: Product = res.data.data.product;
+
+  console.log('product', product);
+
+  if(res.status === 404 || res.status === 500) {
+    return {
+      notFound: true
+    }
+  }
 
   return {
-    props: {
-      product
-    }
+    props: product
   }
 }
 

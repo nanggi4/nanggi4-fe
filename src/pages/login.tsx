@@ -11,8 +11,8 @@ const LoginPage: NextPage = () => {
 
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
-  const [idValid, setIdValid] = useState(true);
-  const [passwordValid, setPasswordValid] = useState(true);
+  const [idValid, setIdValid] = useState(false);
+  const [passwordValid, setPasswordValid] = useState(false);
 
   const router = useRouter();
 
@@ -50,7 +50,7 @@ const LoginPage: NextPage = () => {
         </FormGroup>
         <LoginButton 
           onClick={(e) => handleLogin(e)}
-          disabled={(!idValid||!passwordValid)}
+          disabled={idValid && passwordValid ? false : true}
         >
           로그인
         </LoginButton>

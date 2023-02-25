@@ -8,7 +8,7 @@ import cookies from 'js-cookie';
 const HomePage: NextPage = () => {
 
   const router = useRouter();
-  const user: string = cookies.get("user") !== undefined ? JSON.parse(cookies.get("user")) : false;
+  const user = cookies.get("user") !== undefined ? cookies.get("user") : "";
 
   const handleLogout = () => {
     cookies.remove("user");
@@ -23,7 +23,7 @@ const HomePage: NextPage = () => {
         </Link>
         {user ? (
           <nav>
-            <UserName>{user.name}</UserName>
+            <UserName>{JSON.parse(user.name)}</UserName>
             <Logout
               onClick={() => handleLogout()}
             >
