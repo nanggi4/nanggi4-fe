@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import styled from 'styled-components';
 
@@ -12,7 +13,7 @@ type ProductItemProps = {
 const ProductItem = ({ product: { name, thumbnail, price, id } }: ProductItemProps) => (
   <Link href={`/products/${id}`}>
     <Container>
-      <Thumbnail src={thumbnail ? thumbnail : '/defaultThumbnail.jpg'} />
+      <Image src={thumbnail ? thumbnail : '/defaultThumbnail.jpg'} alt={name} width={180} height={180} />
       <Name>{name}</Name>
       <Price>{convertComma(price)}</Price>
     </Container>
@@ -25,11 +26,6 @@ const Container = styled.a`
   width: 180px;
   margin-left: 20px;
   margin-top: 20px;
-`;
-
-const Thumbnail = styled.img`
-  width: 100%;
-  height: 180px;
 `;
 
 const Name = styled.div`

@@ -26,7 +26,6 @@ const HomePage: NextPage = () => {
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  console.log(123123);
   const data = await axios.get('https://api.sixshop.com/products?page=1&size=10');
   console.log('data', data);
   if(data.status === 200) {

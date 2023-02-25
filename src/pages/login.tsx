@@ -27,35 +27,33 @@ const LoginPage: NextPage = () => {
     }
   }
 
-  useEffect(() => {
-    if(userData.user.id) {
-      router.push('/');
-    }    
-  }, []);
-
   return (
     <>
       <Header />
       <Form>
-        <FormTitle>아이디</FormTitle>
-        <TextInput 
-          onChange={(e) => setId(e.target.value)}
-          onBlur={() => setIdValid(checkLoginInput(id, "id"))}
-          type='text'
-          valid={idValid}
-        />
-        {!idValid&&<ErrorText>올바른 아아디 형식으로 입력해주세요.</ErrorText>}
-        <FormTitle>비밀번호</FormTitle>
-        <TextInput 
-          onChange={(e) => setPassword(e.target.value)}
-          onBlur={() => setPasswordValid(checkLoginInput(password, "password"))}        
-          type='password'
-          valid={passwordValid}
-        />
-        {!passwordValid&&<ErrorText>올바른 비밀번호 형식으로 입력해주세요.</ErrorText>}
+        <FormGroup>
+          <FormTitle>아이디</FormTitle>
+          <TextInput 
+            onChange={(e) => setId(e.target.value)}
+            onBlur={() => setIdValid(checkLoginInput(id, "id"))}
+            type='text'
+            valid={idValid}
+          />
+          {!idValid&&<ErrorText>올바른 아아디 형식으로 입력해주세요.</ErrorText>}
+        </FormGroup>
+        <FormGroup>
+          <FormTitle>비밀번호</FormTitle>
+          <TextInput 
+            onChange={(e) => setPassword(e.target.value)}
+            onBlur={() => setPasswordValid(checkLoginInput(password, "password"))}        
+            type='password'
+            valid={passwordValid}
+          />
+          {!passwordValid&&<ErrorText>올바른 비밀번호 형식으로 입력해주세요.</ErrorText>}
+        </FormGroup>
         <LoginButton 
           onClick={() => handleLogin()}
-          disabled={false}
+          disabled={(!idValid||!passwordValid)}
         >
           로그인
         </LoginButton>
@@ -79,17 +77,22 @@ const FormTitle = styled.p`
   padding: 0;
   font-weight: 700;
   font-size: 13px;
-  color: #6C6C7D;
-  &:nth-child(4){
-    margin-top: 16px;
-  }  
+  color: #6C6C7D; 
 `;
 
-const Form = styled.div`
+const Form = styled.form`
   display: flex;
   flex-direction: column;
   margin-top: 40px;
   padding: 0 20px 40px;
+`;
+
+const FormGroup = styled.article`
+  display: flex;
+  flex-direction: column;
+  &:nth-child(2){
+    margin-top: 16px;
+  }   
 `;
 
 const TextInput = styled.input<{ valid: boolean }>`

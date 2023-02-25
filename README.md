@@ -5,3 +5,5 @@
 
 # Header Component가 중복된다.
 - Header Component를 따로 제작한다.
+
+# img tag 대신 next에서 지원해주는 Image ㅌ
