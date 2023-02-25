@@ -27,8 +27,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const res = await axios.get(`https://api.sixshop.com/products/${id}`);
   const product: Product = res.data.data.product;
 
-  console.log('product', product);
-
   if(res.status === 404 || res.status === 500) {
     return {
       notFound: true

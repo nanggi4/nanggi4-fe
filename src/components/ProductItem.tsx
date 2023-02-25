@@ -28,11 +28,11 @@ const Container = styled.a`
   margin-top: 20px;
 `;
 
-const Name = styled.div`
+const Name = styled.h3`
   margin-top: 8px;
   font-size: 16px;
 `;
 
-const Price = styled.div`
+const Price = styled.p`
   margin-top: 4px;
 `;

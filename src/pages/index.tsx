@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import type { GetServerSideProps } from 'next';
 import type { NextPage } from 'next';
 import { Products } from '../types/product';
@@ -24,8 +24,14 @@ const HomePage: NextPage<Products> = ({products, totalCount}) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const req = await axios.get(`https://api.sixshop.com/products?page=1&size=10`);
-  const products = req.data.data;
+  const res: AxiosResponse<any, any> = await axios.get(`https://api.sixshop.com/products?page=1&size=10`);
+  const products: Products = res.data.data;
+
+  if(!res) {
+    return {
+      notFound: true
+    }
+  }
 
   return {
     props: products

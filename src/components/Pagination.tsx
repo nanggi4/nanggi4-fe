@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { VscChevronLeft, VscChevronRight } from 'react-icons/vsc';
+import { PageType } from '../types/page';
 
 const Pagination = () => {
   return (
@@ -24,7 +25,7 @@ const Pagination = () => {
 
 export default Pagination;
 
-const Container = styled.div`
+const Container = styled.section`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -41,14 +42,10 @@ const Button = styled.button`
   }
 `;
 
-const PageWrapper = styled.div`
+const PageWrapper = styled.nav`
   display: flex;
   margin: 0 16px;
 `;
-
-type PageType = {
-  selected: boolean;
-};
 
 const Page = styled.button<PageType>`
   padding: 4px 6px;
