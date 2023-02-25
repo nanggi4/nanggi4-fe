@@ -1,14 +1,14 @@
 import { useRouter } from 'next/router'
 import Link from 'next/link';
 import type { NextPage } from 'next';
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import cookies from 'js-cookie';
 
 const HomePage: NextPage = () => {
 
-  const router = useRouter();
-  const user = cookies.get("user") !== undefined ? cookies.get("user") : "";
+  const router = useRouter(); 
+  const [user] = useState<>(cookies.get("user") !== undefined ? cookies.get("user") : "");
 
   const handleLogout = () => {
     cookies.remove("user");
@@ -23,7 +23,7 @@ const HomePage: NextPage = () => {
         </Link>
         {user ? (
           <nav>
-            <UserName>{JSON.parse(user.name)}</UserName>
+            <UserName>{"asdasdasd"}</UserName>
             <Logout
               onClick={() => handleLogout()}
             >

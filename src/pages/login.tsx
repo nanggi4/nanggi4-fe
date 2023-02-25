@@ -9,10 +9,10 @@ import {checkLoginInput} from '../utilities/index';
 
 const LoginPage: NextPage = () => {
 
-  const [id, setId] = useState("");
-  const [password, setPassword] = useState("");
-  const [idValid, setIdValid] = useState(false);
-  const [passwordValid, setPasswordValid] = useState(false);
+  const [id, setId] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [idValid, setIdValid] = useState<boolean>(false);
+  const [passwordValid, setPasswordValid] = useState<boolean>(false);
 
   const router = useRouter();
 
@@ -20,7 +20,8 @@ const LoginPage: NextPage = () => {
     e.preventDefault();
     const req = await axios.post('https://api.sixshop.com/login');
     if(req.status === 200) {
-      cookie.set("user", JSON.stringify(req.data.data.user), { expires: 1/ 24 });
+      cookie.set("user", JSON.stringify(req.data.data.user), { expires: 1 / 24 });
+      cookie.set("token", req.data.data.accessToken, { expires: 1 / 24 });
       router.replace('/');
     }
   }
@@ -31,25 +32,25 @@ const LoginPage: NextPage = () => {
         <FormGroup>
           <FormTitle>아이디</FormTitle>
           <TextInput 
-            onChange={(e) => setId(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setId(e.target.value)}
             onBlur={() => setIdValid(checkLoginInput(id, "id"))}
             type='text'
             valid={idValid}
           />
-          {!idValid&&<ErrorText>올바른 아아디 형식으로 입력해주세요.</ErrorText>}
+          {(id&&!idValid)&&<ErrorText>올바른 아아디 형식으로 입력해주세요.</ErrorText>}
         </FormGroup>
         <FormGroup>
           <FormTitle>비밀번호</FormTitle>
           <TextInput 
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
             onBlur={() => setPasswordValid(checkLoginInput(password, "password"))}        
             type='password'
             valid={passwordValid}
           />
-          {!passwordValid&&<ErrorText>올바른 비밀번호 형식으로 입력해주세요.</ErrorText>}
+          {(password&&!passwordValid)&&<ErrorText>올바른 비밀번호 형식으로 입력해주세요.</ErrorText>}
         </FormGroup>
         <LoginButton 
-          onClick={(e) => handleLogin(e)}
+          onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => handleLogin(e)}
           disabled={idValid && passwordValid ? false : true}
         >
           로그인

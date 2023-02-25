@@ -4,12 +4,12 @@ import styled from 'styled-components';
 import axios from 'axios';
 import type { GetServerSideProps } from 'next';
 import type { NextPage } from 'next';
+import { Products } from '../types/product';
 
-import products from '../api/data/products.json';
 import ProductList from '../components/ProductList';
 import Pagination from '../components/Pagination';
 
-const HomePage: NextPage = () => {
+const HomePage: NextPage<Products> = ({products, totalCount}) => {
   const router = useRouter();
   const { page } = router.query;
 
@@ -24,20 +24,11 @@ const HomePage: NextPage = () => {
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const data = await axios.get('https://api.sixshop.com/products?page=1&size=10');
-  console.log('data', data);
-  if(data.status === 200) {
-    console.log(data);
-  }
+  const req = await axios.get(`https://api.sixshop.com/products?page=1&size=10`);
+  const products = req.data.data;
 
   return {
-    props: {
-      order: {
-        firstName: 'Donald',
-        lastName: 'Duck',
-        orderNo: 'DL100'
-      }
-    }
+    props: products
   }
 }
 

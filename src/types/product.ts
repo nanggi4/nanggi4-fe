@@ -4,3 +4,8 @@ export type Product = {
   thumbnail: string | null;
   price: number;
 }
+
+export type Products = {
+  products: Product[],
+  totalCount: number
+}
