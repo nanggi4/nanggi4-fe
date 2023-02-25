@@ -6,7 +6,6 @@ import type { GetServerSideProps } from 'next'
 import type { NextPage } from 'next';
 
 import products from '../api/data/products.json';
-import Header from '../components/Header';
 import ProductList from '../components/ProductList';
 import Pagination from '../components/Pagination';
 
@@ -16,7 +15,6 @@ const HomePage: NextPage = () => {
 
   return (
     <>
-      <Header />
       <Container>
         <ProductList products={products.slice(0, 10)} />
         <Pagination />

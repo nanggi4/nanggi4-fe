@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { useRecoilState } from 'recoil';
 
-import Header from '../components/Header';
 import {checkLoginInput} from '../utilities/index';
 import { userState, IUserDataTypes } from '../atom';
 
@@ -29,7 +28,6 @@ const LoginPage: NextPage = () => {
 
   return (
     <>
-      <Header />
       <Form>
         <FormGroup>
           <FormTitle>아이디</FormTitle>
