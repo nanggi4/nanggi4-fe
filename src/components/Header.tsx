@@ -3,34 +3,27 @@ import Link from 'next/link';
 import type { NextPage } from 'next';
 import React from 'react';
 import styled from 'styled-components';
-import { useRecoilState } from 'recoil';
-import { IUserDataTypes, userState } from '../atom';
+import cookies from 'js-cookie';
 
 const HomePage: NextPage = () => {
 
   const router = useRouter();
-  const [userData, setUserData] = useRecoilState<IUserDataTypes>(userState);
+  const user: string = cookies.get("user") !== undefined ? JSON.parse(cookies.get("user")) : false;
 
   const handleLogout = () => {
-    if(userData.user.id) {
-      setUserData({accessToken: '',
-      user: {
-        id: '',
-        name: ''
-      }})
-      router.push('/');
-    }
+    cookies.remove("user");
+    router.replace('/');
   }
-
+  
   return (
     <>
       <Header>
         <Link href='/'>
           <Title>HAUS</Title>
         </Link>
-        {userData.user.id ? (
+        {user ? (
           <nav>
-            <UserName>{userData.user.name}</UserName>
+            <UserName>{user.name}</UserName>
             <Logout
               onClick={() => handleLogout()}
             >

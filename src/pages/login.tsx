@@ -1,12 +1,11 @@
 import { useRouter } from 'next/router'
 import type { NextPage } from 'next';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import { useRecoilState } from 'recoil';
+import cookie from "js-cookie";
 
 import {checkLoginInput} from '../utilities/index';
-import { userState, IUserDataTypes } from '../atom';
 
 const LoginPage: NextPage = () => {
 
@@ -16,13 +15,13 @@ const LoginPage: NextPage = () => {
   const [passwordValid, setPasswordValid] = useState(true);
 
   const router = useRouter();
-  const [userData, setUserData] = useRecoilState<IUserDataTypes>(userState);
 
-  const handleLogin = async () => {
-    const data = await axios.post('https://api.sixshop.com/login');
-    if(data.status === 200) {
-      setUserData(data.data.data);
-      router.push('/');
+  const handleLogin = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    const req = await axios.post('https://api.sixshop.com/login');
+    if(req.status === 200) {
+      cookie.set("user", JSON.stringify(req.data.data.user), { expires: 1/ 24 });
+      router.replace('/');
     }
   }
 
@@ -50,7 +49,7 @@ const LoginPage: NextPage = () => {
           {!passwordValid&&<ErrorText>올바른 비밀번호 형식으로 입력해주세요.</ErrorText>}
         </FormGroup>
         <LoginButton 
-          onClick={() => handleLogin()}
+          onClick={(e) => handleLogin(e)}
           disabled={(!idValid||!passwordValid)}
         >
           로그인

@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import type { GetServerSideProps } from 'next'
+import type { GetServerSideProps } from 'next';
 import type { NextPage } from 'next';
 
 import products from '../api/data/products.json';
