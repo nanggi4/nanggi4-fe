@@ -3,7 +3,7 @@ import type { NextPage } from 'next';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import cookie from "js-cookie";
+import { setCookie, getCookie } from 'cookies-next';
 
 import { checkLoginInput } from '../utilities/index';
 
@@ -11,8 +11,8 @@ const LoginPage: NextPage = () => {
 
   const [id, setId] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [idValid, setIdValid] = useState<boolean>(false);
-  const [passwordValid, setPasswordValid] = useState<boolean>(false);
+  const [idValid, setIdValid] = useState<boolean>(true);
+  const [passwordValid, setPasswordValid] = useState<boolean>(true);
 
   const router = useRouter();
 
@@ -20,8 +20,8 @@ const LoginPage: NextPage = () => {
     e.preventDefault();
     const req = await axios.post('https://api.sixshop.com/login');
     if(req.status === 200) {
-      cookie.set("user", JSON.stringify(req.data.data.user), { expires: 1 / 24 });
-      cookie.set("token", req.data.data.accessToken, { expires: 1 / 24 });
+      setCookie("user", JSON.stringify(req.data.data.user), { maxAge: 24 * 60 });
+      setCookie("token", req.data.data.accessToken, { maxAge: 24 * 60 });
       router.replace('/');
     }
   }
@@ -37,7 +37,7 @@ const LoginPage: NextPage = () => {
             type='text'
             valid={idValid}
           />
-          {(id&&!idValid)&&<ErrorText>올바른 아아디 형식으로 입력해주세요.</ErrorText>}
+          {!idValid&&<ErrorText>올바른 아아디 형식으로 입력해주세요.</ErrorText>}
         </FormGroup>
         <FormGroup>
           <FormTitle>비밀번호</FormTitle>
@@ -47,11 +47,11 @@ const LoginPage: NextPage = () => {
             type='password'
             valid={passwordValid}
           />
-          {(password&&!passwordValid)&&<ErrorText>올바른 비밀번호 형식으로 입력해주세요.</ErrorText>}
+          {!passwordValid&&<ErrorText>올바른 비밀번호 형식으로 입력해주세요.</ErrorText>}
         </FormGroup>
         <LoginButton 
           onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => handleLogin(e)}
-          disabled={idValid && passwordValid ? false : true}
+          disabled={id.length >= 5 && password.length >= 8 && idValid && passwordValid ? false : true}
         >
           로그인
         </LoginButton>

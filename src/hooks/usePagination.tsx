@@ -5,10 +5,8 @@ export const usePagination = (page: number, perPageReords: number, totalReordsCo
   const router = useRouter();
 
   const countPage = (pageNum: number): number[] => {
-    const startIndex = Math.floor((pageNum - 1) / perPageReords) + 1;
-    const lastIndex = perPageReords * startIndex;
-    console.log('startIndex', startIndex);
-    console.log('lastIndex', lastIndex);
+    const startIndex = Math.floor((pageNum - 1) / perPageReords) + perPageReords;
+    const lastIndex = startIndex + perPageReords - 1;
     return Array.from(
       { length: (lastIndex - startIndex) / 1 + 1 },
       (value, index) => startIndex + index * 1
