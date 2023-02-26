@@ -24,7 +24,7 @@ const Pagination: NextPage<PaginationType> = ({
           </Page>
         ))}
       </PageWrapper>
-      <Button onClick={() => next(currentPage)} disabled={currentPage > 105}>
+      <Button onClick={() => next(currentPage)} disabled={currentPage >= 11}>
         <VscChevronRight />
       </Button>
     </Container>

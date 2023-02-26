@@ -11,7 +11,7 @@ import { convertComma } from '../../utilities';
 const ProductDetailPage: NextPage<Product> = ({ name, price, thumbnail }) => {
   return (
     <>
-      <Image src={`${thumbnail}`} alt={name} width={420} height={420} />
+      <Image src={thumbnail ? thumbnail : '/defaultThumbnail.jpg'} alt={name} width={420} height={420} />
       <ProductInfoWrapper>
         <Name>{name}</Name>
         <Price>{convertComma(price)}원</Price>

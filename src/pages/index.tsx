@@ -14,13 +14,16 @@ const HomePage: NextPage<Products> = ({products, totalCount}) => {
   const router = useRouter();
   const page = router.query.page === undefined ? 1 : Number(router.query.page);
 
+  const perPageReords = 10;
+  const pageCount = 5;
+
   const [
     currentPage,
     displayPage,
     changePage,
     next,
     prev
-  ] = usePagination(page, 5, totalCount);  
+  ] = usePagination(page, pageCount, perPageReords, totalCount);  
 
   return (
     <>

@@ -1,12 +1,13 @@
 import { useRouter } from 'next/router'
 import { useState } from "react";
 
-export const usePagination = (page: number, perPageReords: number, totalReordsCount: number) => {
+export const usePagination = (page: number, pageCount: number, perPageReords: number, totalReordsCount: number) => {
   const router = useRouter();
+  const lastPage = Math.ceil(totalReordsCount / 10);
 
   const countPage = (pageNum: number): number[] => {
-    const startIndex = Math.floor((pageNum - 1) / perPageReords) + perPageReords;
-    const lastIndex = startIndex + perPageReords - 1;
+    const startIndex = Math.floor((pageNum - 1) / pageCount) * pageCount + 1;
+    const lastIndex = startIndex + pageCount - 1 > lastPage ? lastPage : startIndex + pageCount - 1;
     return Array.from(
       { length: (lastIndex - startIndex) / 1 + 1 },
       (value, index) => startIndex + index * 1
@@ -23,16 +24,17 @@ export const usePagination = (page: number, perPageReords: number, totalReordsCo
   };
 
   const next = (pageNum: number): void => {
-    const startIndex = Math.floor((pageNum - 1) / perPageReords) + 1 + perPageReords;
-    const lastIndex = startIndex + perPageReords - 1;
+    const startIndex = Math.floor(pageNum / pageCount + 1) * pageCount + 1;
+    setDisplayPage(() => countPage(startIndex));
     setCurrentPage(startIndex);
-    // setDisplayPage(() => countPage(startIndex));
     router.replace(`?page=${startIndex}`);
   };
 
   const prev = (pageNum: number): void => {
-    const startIndex = Math.floor(pageNum / perPageReords) * perPageReords + 1;
-    console.log('startIndex', startIndex);
+    const startIndex = Math.floor(pageNum / pageCount - 1) * pageCount + 1;
+    setDisplayPage(() => countPage(startIndex));
+    setCurrentPage(startIndex);
+    router.replace(`?page=${startIndex}`);
   };  
 
   return [
