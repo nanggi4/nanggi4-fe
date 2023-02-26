@@ -24,14 +24,16 @@ export const usePagination = (page: number, pageCount: number, perPageReords: nu
   };
 
   const next = (pageNum: number): void => {
-    const startIndex = Math.floor(pageNum / pageCount + 1) * pageCount + 1;
+    const firstNum = Number.isInteger(pageNum / pageCount) ? Math.floor(pageNum / pageCount) : Math.floor(pageNum / pageCount + 1);
+    const startIndex = firstNum * pageCount + 1;
     setDisplayPage(() => countPage(startIndex));
     setCurrentPage(startIndex);
     router.replace(`?page=${startIndex}`);
   };
 
   const prev = (pageNum: number): void => {
-    const startIndex = Math.floor(pageNum / pageCount - 1) * pageCount + 1;
+    const firstNum = Number.isInteger(pageNum / pageCount) ? Math.floor(pageNum / pageCount) - 2 : Math.floor(pageNum / pageCount) - 1;
+    const startIndex = firstNum * pageCount + 1;
     setDisplayPage(() => countPage(startIndex));
     setCurrentPage(startIndex);
     router.replace(`?page=${startIndex}`);
