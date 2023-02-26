@@ -1,22 +1,30 @@
 import React from 'react';
 import styled from 'styled-components';
+import type { NextPage } from 'next';
 import { VscChevronLeft, VscChevronRight } from 'react-icons/vsc';
-import { PageType } from '../types/page';
+import { PageType, PaginationType } from '../types/page';
 
-const Pagination = () => {
+const Pagination: NextPage<PaginationType> = ({
+  page,
+  currentPage,
+  displayPage,
+  changePage,
+  next,
+  prev 
+}) => {
   return (
     <Container>
-      <Button disabled>
+      <Button onClick={() => prev()} disabled={currentPage < 6}>
         <VscChevronLeft />
       </Button>
       <PageWrapper>
-        {[1, 2, 3, 4, 5].map((page) => (
-          <Page key={page} selected={page === 1} disabled={page === 1}>
+        {displayPage.map(page => (
+          <Page onClick={() => changePage(page)} key={page} selected={page === currentPage} disabled={page === currentPage}>
             {page}
           </Page>
         ))}
       </PageWrapper>
-      <Button disabled={false}>
+      <Button onClick={() => next()} disabled={currentPage > 105}>
         <VscChevronRight />
       </Button>
     </Container>

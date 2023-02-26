@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import cookie from "js-cookie";
 
-import {checkLoginInput} from '../utilities/index';
+import { checkLoginInput } from '../utilities/index';
 
 const LoginPage: NextPage = () => {
 
