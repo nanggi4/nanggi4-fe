@@ -12,7 +12,7 @@ import Pagination from '../components/Pagination';
 
 const HomePage: NextPage<Products> = ({products, totalCount}) => {
   const router = useRouter();
-  const { page } = router.query;
+  const page = router.query.page === undefined ? 1 : Number(router.query.page);
 
   const [
     currentPage,
@@ -20,7 +20,7 @@ const HomePage: NextPage<Products> = ({products, totalCount}) => {
     changePage,
     next,
     prev
-  ] = usePagination(5, totalCount);  
+  ] = usePagination(page, 5, totalCount);  
 
   return (
     <>

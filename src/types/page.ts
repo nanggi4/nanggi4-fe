@@ -7,6 +7,6 @@ export type PaginationType = {
   currentPage: number;
   displayPage: number[];
   changePage: (pageNum: number) => void;
-  next: () => void;
-  prev: () => void;
+  next: (pageNum: number) => void;
+  prev: (pageNum: number) => void;
 };
