@@ -3,9 +3,11 @@ import type { NextPage } from 'next';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import { setCookie, getCookie } from 'cookies-next';
+import { setCookie, hasCookie } from 'cookies-next';
 
 import { checkLoginInput } from '../utilities/index';
+import { useSetRecoilState } from 'recoil';
+import { userState } from '../atom';
 
 const LoginPage: NextPage = () => {
 
@@ -13,6 +15,7 @@ const LoginPage: NextPage = () => {
   const [password, setPassword] = useState<string>("");
   const [idValid, setIdValid] = useState<boolean>(true);
   const [passwordValid, setPasswordValid] = useState<boolean>(true);
+  const setRecoilUser = useSetRecoilState(userState);
 
   const router = useRouter();
 
@@ -21,10 +24,12 @@ const LoginPage: NextPage = () => {
     const req = await axios.post('https://api.sixshop.com/login');
     if(req.status === 200) {
       setCookie("user", JSON.stringify(req.data.data.user), { maxAge: 24 * 60 });
-      setCookie("token", req.data.data.accessToken, { maxAge: 24 * 60 });
+      setRecoilUser(req.data.data.user);
       router.replace('/');
     }
   }
+
+  if(hasCookie('user')) router.replace('/');
 
   return (
     <>
