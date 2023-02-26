@@ -7,6 +7,6 @@ export type UserWithAccessToken = {
 }
 
 export type User = {
-  name?: string;
-  id?: string;
-}
+  name: string;
+  id: string;
+} | undefined;

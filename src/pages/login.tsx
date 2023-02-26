@@ -19,8 +19,6 @@ const LoginPage: NextPage = () => {
 
   const router = useRouter();
 
-  console.log(process.env.SIXSHOP_API_ENDPONIT);
-
   const handleLogin = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     const req = await axios.post(`${process.env.NEXT_PUBLIC_SIXSHOP_API_ENDPONIT}/login`);

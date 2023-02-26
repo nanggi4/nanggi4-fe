@@ -4,9 +4,9 @@ export type PageType = {
 
 export type PaginationType = {
   page: number;
-  currentPage: number;
-  displayPage: number[];
-  changePage: (pageNum: number) => void;
-  next: (pageNum: number) => void;
-  prev: (pageNum: number) => void;
+  currentPage: number | number[] | ((pageNum: number) => void);
+  displayPage: number | number[] | ((pageNum: number) => void);
+  changePage: number | number[] | ((pageNum: number) => void);
+  next: number | number[] | ((pageNum: number) => void);
+  prev: number | number[] | ((pageNum: number) => void);
 };

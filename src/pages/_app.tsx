@@ -34,7 +34,7 @@ const Background = styled.div`
   background-color: #f0f0f5;
 `;
 
-const Content = styled.div`
+const Content = styled.section`
   width: 420px;
   min-height: 100%;
   margin: 0 auto;

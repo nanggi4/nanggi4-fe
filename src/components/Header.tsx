@@ -1,17 +1,32 @@
 import { useRouter } from 'next/router'
 import Link from 'next/link';
 import type { NextPage } from 'next';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { getCookie, deleteCookie } from 'cookies-next';
+import { getCookie, hasCookie, deleteCookie } from 'cookies-next';
 import { User } from '../types/user';
+
+import { useRecoilState } from 'recoil';
+import { userState } from '../atom';
 
 const HomePage: NextPage = () => {
   const router = useRouter();
-  const user: User = getCookie('user') !== undefined ? JSON.parse(getCookie('user')) : '';
-  
-  const handleLogout = () => {
+  const [user, setUser] = useRecoilState(userState);
+  const [userData, setUserData] = useState(false);
+ 
+  useEffect(() => {
+    if(hasCookie('user')) {
+      const userData: User = JSON.parse(getCookie('user'));
+      setUserData(userData);
+    }
+  }, []);
+
+  const handleLogout = (): void => {
     deleteCookie('user', { path: '/' });
+    setUser({
+      name: '',
+      id: ''
+    });
     router.replace('/');
   }
   
@@ -21,15 +36,15 @@ const HomePage: NextPage = () => {
         <Link href='/'>
           <Title>HAUS</Title>
         </Link>
-        {user ? (
-          <div>
-            <UserName>{user.name}</UserName>
+        {hasCookie('user') ? (
+          <UserData>
+            <UserName>{userData.name}</UserName>
             <Logout
               onClick={() => handleLogout()}
             >
               logout
             </Logout>
-          </div>
+          </UserData>
         ) : (
           <Link href='/login'>
             <p>login</p>
@@ -57,4 +72,7 @@ const UserName = styled.p`
 `;
 
 const Logout = styled.a`
+`;
+
+const UserData = styled.nav`
 `;
