@@ -46,7 +46,7 @@ const HomePage: NextPage<Products> = ({products, totalCount}) => {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
     const page = context.query.page === undefined ? 1 : context.query.page;
-    const res: AxiosResponse<any, any> = await axios.get(`${process.env.SIXSHOP_API_ENDPONIT}/products?page=${page}&size=10`);
+    const res: AxiosResponse<any, any> = await axios.get(`${process.env.NEXT_PUBLIC_SIXSHOP_API_ENDPONIT}/products?page=${page}&size=10`);
     const products: Products = res.data.data;
     return {
       props: products

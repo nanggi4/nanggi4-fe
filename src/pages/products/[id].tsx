@@ -25,7 +25,7 @@ export default ProductDetailPage;
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
     const id = context.query.id;
-    const res = await axios.get(`${process.env.SIXSHOP_API_ENDPONIT}/products/${id}`);
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_SIXSHOP_API_ENDPONIT}/products/${id}`);
     const product: Product = res.data.data.product;
     return {
       props: product

@@ -53,8 +53,8 @@ const Title = styled.h1`
   font-size: 48px;
 `;
 
-const UserName = styled.div`
+const UserName = styled.p`
 `;
 
-const Logout = styled.div`
+const Logout = styled.a`
 `;
