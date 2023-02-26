@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import Link from 'next/link';
 import type { NextPage } from 'next';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { getCookie, deleteCookie } from 'cookies-next';
 import { User } from '../types/user';
@@ -10,11 +10,7 @@ const HomePage: NextPage = () => {
   const router = useRouter();
   const user: User = getCookie('user') !== undefined ? JSON.parse(getCookie('user')) : '';
   
-  useEffect(() => {
-  }, []);
-
   const handleLogout = () => {
-    console.log('123');
     deleteCookie('user', { path: '/' });
     router.replace('/');
   }

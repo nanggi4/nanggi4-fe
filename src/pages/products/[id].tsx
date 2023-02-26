@@ -23,18 +23,17 @@ const ProductDetailPage: NextPage<Product> = ({ name, price, thumbnail }) => {
 export default ProductDetailPage;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const id = context.query.id;
-  const res = await axios.get(`https://api.sixshop.com/products/${id}`);
-  const product: Product = res.data.data.product;
-
-  if(res.status === 404 || res.status === 500) {
+  try {
+    const id = context.query.id;
+    const res = await axios.get(`${process.env.SIXSHOP_API_ENDPONIT}/products/${id}`);
+    const product: Product = res.data.data.product;
+    return {
+      props: product
+    }    
+  } catch (error) {
     return {
       notFound: true
     }
-  }
-
-  return {
-    props: product
   }
 }
 

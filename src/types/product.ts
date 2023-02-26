@@ -6,6 +6,6 @@ export type Product = {
 }
 
 export type Products = {
-  products: Product[],
-  totalCount: number
+  products: Product[];
+  totalCount: number;
 }

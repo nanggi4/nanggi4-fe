@@ -5,6 +5,7 @@ import axios, { AxiosResponse } from 'axios';
 import type { GetServerSideProps } from 'next';
 import type { NextPage } from 'next';
 import { Products } from '../types/product';
+import { PaginationType } from '../types/page';
 import { usePagination } from "../hooks/usePagination";
 
 import ProductList from '../components/ProductList';
@@ -23,7 +24,7 @@ const HomePage: NextPage<Products> = ({products, totalCount}) => {
     changePage,
     next,
     prev
-  ] = usePagination(page, pageCount, perPageReords, totalCount);  
+  ] = usePagination(page, pageCount, perPageReords, totalCount);
 
   return (
     <>
@@ -43,19 +44,18 @@ const HomePage: NextPage<Products> = ({products, totalCount}) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const page = context.query.page === undefined ? 1 : context.query.page;
-  const res: AxiosResponse<any, any> = await axios.get(`https://api.sixshop.com/products?page=${page}&size=10`);
-  const products: Products = res.data.data;
-
-  if(!res) {
+  try {
+    const page = context.query.page === undefined ? 1 : context.query.page;
+    const res: AxiosResponse<any, any> = await axios.get(`${process.env.SIXSHOP_API_ENDPONIT}/products?page=${page}&size=10`);
+    const products: Products = res.data.data;
+    return {
+      props: products
+    }    
+  } catch (error) {
     return {
       notFound: true
     }
-  }
-
-  return {
-    props: products
-  }
+  }  
 }
 
 export default HomePage;
